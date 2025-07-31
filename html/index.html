@@ -1,34 +1,181 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>안심 지도 서비스</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/search.css">
-    <link rel="stylesheet" href="/css/category.css">
-    <link rel="stylesheet" href="/css/policebutton.css">
-    <link rel="stylesheet" href="/css/policelist.css">
+    <meta charset="utf-8">
+    <title>전국 안심 서비스</title>
+    <!-- 부트 스트랩 버튼 css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        #mapwrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category,
+        .category * {
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+
+        .category {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-end;
+            top: 200px;
+            right: 70px;
+            width: 90px;
+            height: 140px;
+            z-index: 10;
+            border: 1px solid black;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            font-size: 12px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        #searchTxt {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            top: 100px;
+            left: 100px;
+            width: 700px;
+            height: 70px;
+            z-index: 10;
+            border: 1px solid black;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            font-size: 30px;
+            text-align: center;
+            background-color: #fff;
+             align-items: center;
+            justify-content: center;
+        }
+
+        #searchBtn {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            top: 100px;
+            left: 820px;
+            width: 100px;
+            height: 70px;
+            z-index: 10;
+            border: 1px solid black;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            font-size: 25px;
+            text-align: center;
+            background-color: #fff;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category li {
+            list-style: none;
+            width: 80px;
+            height: 60px;
+            padding: 5px 0;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category li+li {
+            border-top: 1px solid #ccc;
+            margin-top: 5px;
+        }
+
+        .category .ico_comm {
+            display: block;
+            margin: 0 auto 2px;
+            width: 22px;
+            height: 26px;
+        }
+
+        .category .ico_coffee {
+            width: 50px;
+            background-position: -10px 0;
+            background-image: url('../css/assets/CCTV.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .category .ico_store {
+            width: 50px;
+            background-position: -10px 0;
+            background-image: url('../css/assets/Police.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .category .menu_selected {
+            background: #FF5F4A;
+            color: #fff;
+            border-left: 1px solid #915B2F;
+            border-right: 1px solid #915B2F;
+            margin: 0 -1px;
+        }
+    </style>
 </head>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/category.css">
+<link rel="stylesheet" href="/css/policebutton.css">
+<link rel="stylesheet" href="/css/policelist.css">
 <body>
-    <!-- 실행 시 처음으로 나오는 main 화면(index.html) -->
-    <div id="mapwrap">
-        <div id="map"></div>
-    </div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69a0a66e410a9ba5b66da68fba4fa2c4">
-    </script>
-	<script src="/js/index.js"></script>
-    <script src="/js/cctvCategory.js"></script>
-    <script src="/js/policeCategory.js"></script>
-    <script src="/js/findPolice.js"></script>
-    <script src="/js/policeButton.js"></script>
-    <script src="/js/policList.js"></script>
-    <script src="/js/regionArea.js"></script>
+   <main>
+        <div id="mapwrap">
+            <div id="map" style="width:100%;height:100vh;"></div>
+
+            <!-- 카테고리 div -->
+            <div class="category">
+                <ul>
+                    <li id="cctv" onclick="changeMarker('coffee')">
+                        <span class="ico_comm ico_coffee"></span>
+                        CCTV
+                    </li>
+                    <li id="police" onclick="changeMarker('store')">
+                        <span class="ico_comm ico_store"></span>
+                        파출소
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 검색창, 검색 버튼 div -->
+            <div class="search">
+                <input type="text" id="searchTxt" class="btn btn-outline-dark" placeholder="주소를 입력하세요">
+                <button id="searchBtn" class="btn btn-outline-dark">검색</button>
+            </div>
+        </div>
+    </main>
+
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65fbbce8516245d79d959af18a25d24f"></script>
+        </script>
+        <script src="/js/index.js"></script>
+        <script src="/js/cctvCategory.js"></script>
+        <script src="/js/policeCategory.js"></script>
+        <script src="/js/findPolice.js"></script>
+        <script src="/js/policeButton.js"></script>
+        <script src="/js/policList.js"></script>
+        <script src="/js/regionArea.js"></script>
 </body>
+
 </html>
