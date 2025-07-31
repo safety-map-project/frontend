@@ -2,21 +2,129 @@
  공통으로 들어가는 css
 */
 
-*{
-    margin: 0;
-    padding: 0;
-}
+ #mapwrap {
+            position: relative;
+            overflow: hidden;
+        }
 
-#mapwrap {
-    position: relative;
-}
+        .category,
+        .category * {
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
 
-#map{
-    margin: 0 auto;
-    width: 100%;
-    height: 100vh;
-}
+        .category {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-end;
+            top: 200px;
+            right: 70px;
+            width: 90px;
+            height: 140px;
+            z-index: 10;
+            border: 1px solid black;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            font-size: 12px;
+            text-align: center;
+            background-color: #fff;
+        }
 
+        #searchTxt {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            top: 100px;
+            left: 100px;
+            width: 700px;
+            height: 70px;
+            z-index: 10;
+            border: 1px solid black;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            font-size: 30px;
+            text-align: center;
+            background-color: #fff;
+            align-items: center;
+            justify-content: center;
+        }
 
+        #searchBtn {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            top: 100px;
+            left: 820px;
+            width: 100px;
+            height: 70px;
+            z-index: 10;
+            border: 1px solid black;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            font-size: 25px;
+            text-align: center;
+            background-color: #fff;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category li {
+            list-style: none;
+            width: 80px;
+            height: 60px;
+            padding: 5px 0;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category li+li {
+            border-top: 1px solid #ccc;
+            margin-top: 5px;
+        }
+
+        .category .ico_comm {
+            display: block;
+            margin: 0 auto 2px;
+            width: 22px;
+            height: 26px;
+        }
+
+        .category .ico_coffee {
+            width: 50px;
+            background-position: -10px 0;
+            background-image: url('../css/assets/CCTV.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .category .ico_store {
+            width: 50px;
+            background-position: -10px 0;
+            background-image: url('../css/assets/Police.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .category .menu_selected {
+            background: #FF5F4A;
+            color: #fff;
+            border-left: 1px solid #915B2F;
+            border-right: 1px solid #915B2F;
+            margin: 0 -1px;
+        }
 
 
