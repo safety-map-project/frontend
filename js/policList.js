@@ -74,7 +74,7 @@ searchBtn.addEventListener("click", e => {
             setTimeout(() => {
                 // 컨텐츠 전체 높이가 실제 보여지는 크기보다 작고
                 // 아직 렌더링되지 않은 데이터가 남아있으면
-                if (policeListWrap.scrollHeight <= policeListWrap.clientHeight && renderIndex < sampleData.length) {
+                if (policeListWrap.scrollHeight <= policeListWrap.clientHeight && renderIndex < filterdData.length) {
                     // 남은 데이터 추가 랜더링
                     renderNextLi(ul);
                 }
@@ -102,7 +102,7 @@ const initIndex = 4; // 한 번에 보여줄 데이터 수
   
 function renderNextLi(ul) {
       // 더 이상 렌더링할 데이터가 없으면 종료
-      if (renderIndex >= sampleData.length) return;
+      if (renderIndex >= filterdData.length) return;
   
       const nextData = filterdData.slice(renderIndex, renderIndex + initIndex);
   
