@@ -23,6 +23,7 @@ return str
     .replace(/\s/g, '')      // 공백 제거
 }
 
+// 거리계산함수(Haversine 공식)
 function getDistance(lat1, lon1, lat2, lon2){
     const R = 6371e3;
     const q1 = lat1 * Math.PI / 180;
@@ -70,17 +71,20 @@ searchBtn.addEventListener("click", e => {
                 return normalizedAddress.includes(normalizedInput);
             });
 
+            // 사용자 현재 위치 
             navigator.geolocation.getCurrentPosition(function(pos){
                 const userLat = pos.coords.latitude;
                 const userLng = pos.coords.longitude;
             
+                // 각 파출소와의 거리 계산
                 filterdData.forEach(police => {
                     police.distance = getDistance(userLat, userLng, police.lat, police.lng);
                 });
             
+                // 거리에 따른 오름차순 정렬
                 const sorted = filterdData.sort((a, b) => a.distance - b.distance);
             
-                // 👉 정렬된 배열로 덮어쓰기
+                // 정렬된 배열로 덮어쓰기
                 filterdData = sorted;
             
                 if(filterdData.length === 0){
@@ -88,7 +92,9 @@ searchBtn.addEventListener("click", e => {
                     return;
                 }
             
+                // 초기화
                 renderIndex = 0;
+                // policeListWrap 다시 표시
                 policeListWrap.style.display = "block";
                 policeListWrap.innerHTML = '<ul id="policeUl"></ul>';
             
@@ -96,14 +102,17 @@ searchBtn.addEventListener("click", e => {
                 renderNextLi(ul);
             
                 setTimeout(() => {
+                    // 컨텐츠 높이보다 실제 보여지는 크기가 똑같거나 크고
+                    // 로딩되어야하는 데이터가 있을 경우
                     if (policeListWrap.scrollHeight <= policeListWrap.clientHeight && renderIndex < filterdData.length) {
+                        // 남은 데이터 추가 랜더링
                         renderNextLi(ul);
                     }
                 }, 100);
             });
             
         })
-        .catch(error => console.error("CCTV test 데이터 로드 실패:", error))
+        .catch(error => console.error("police 데이터 로드 실패:", error))
 
 });
 
@@ -126,6 +135,7 @@ function renderNextLi(ul) {
       // 더 이상 렌더링할 데이터가 없으면 종료
       if (renderIndex >= filterdData.length) return;
   
+      // 현재 인덱스부터 4개까지 보여줌
       const nextData = filterdData.slice(renderIndex, renderIndex + initIndex);
   
       nextData.forEach(police => {
