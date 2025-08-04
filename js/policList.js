@@ -172,10 +172,14 @@ function renderNextLi(ul) {
             });
 
             navigator.geolocation.getCurrentPosition(function(pos){
-                const userLat = pos.coords.latitude;
-                const userLng = pos.coords.longitude;
-                
-                window.open(`https://map.kakao.com/link/from/현재 내 위치,${userLat},${userLng}/${police.name},${police.lat},${police.lng}`, 'newWindow');
+                const userLat = pos.coords.latitude; // user 현재 경도
+                const userLng = pos.coords.longitude; // user 현재 위도
+
+                const fromName = encodeURIComponent("현재 내 위치");
+                const toName = encodeURIComponent(police.name);
+              
+                const url = `https://map.kakao.com/link/from/${fromName},${userLat},${userLng}/to/${toName},${police.lat},${police.lng}`;
+                window.open(url);                
             });
 
           });
