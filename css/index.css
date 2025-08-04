@@ -42,9 +42,11 @@
             z-index: 10;
             border: 1px solid black;
             font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
-            font-size: 30px;
+            font-size: 22px;
+            color: #000;
             text-align: center;
             background-color: #fff;
+            caret-color: #000;
             align-items: center;
             justify-content: center;
             color: #000;
@@ -52,7 +54,7 @@
 
         #searchBtn {
             position: absolute;
-            overflow: hidden;
+            /* overflow: hidden;s */
             display: flex;
             top: 100px;
             left: 820px;
