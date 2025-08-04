@@ -7,7 +7,6 @@ $(function() {
             return;
         }
 
-        $('#searchBtn').prop('disabled', true); // 검색 버튼 비활성화
         try {
             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
             const res = await fetch(url, {
@@ -34,7 +33,7 @@ $(function() {
             console.error("요청 실패:", err);
             alert("데이터를 불러오는 중 오류가 발생했습니다.");
         } finally {
-            $('#searchBtn').prop('disabled', false).text('검색');
+            $('#searchBtn').prop('disabled', false).text('검색'); // 검색 버튼 비활성화
         }
     });
 });
