@@ -163,13 +163,21 @@ function renderNextLi(ul) {
                 level: 3 // 지도의 확대 레벨
             };
 
-            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
+            // 선택한 경찰의 위도, 경도를 지도에 마커로 표시
             new kakao.maps.Marker({
                 map: map,
                 position: new kakao.maps.LatLng(police.lat, police.lng)
             });
-            console.log(police);
+
+            navigator.geolocation.getCurrentPosition(function(pos){
+                const userLat = pos.coords.latitude;
+                const userLng = pos.coords.longitude;
+                
+                window.open(`https://map.kakao.com/link/from/현재 내 위치,${userLat},${userLng}/${police.name},${police.lat},${police.lng}`, 'newWindow');
+            });
+
           });
 
       });
