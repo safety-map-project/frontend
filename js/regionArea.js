@@ -7,7 +7,7 @@ $(function() {
             return;
         }
 
-        $('#searchBtn').prop('disabled', true).text('검색 중...');
+        $('#searchBtn').prop('disabled', true); // 검색 버튼 비활성화
         try {
             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
             const res = await fetch(url, {
