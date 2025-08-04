@@ -49,6 +49,7 @@
             caret-color: #000;
             align-items: center;
             justify-content: center;
+            color: #000;
         }
 
         #searchBtn {
@@ -67,6 +68,7 @@
             background-color: #fff;
             align-items: center;
             justify-content: center;
+            color: #000;
         }
 
         .category ul {
