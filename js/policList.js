@@ -57,7 +57,7 @@ searchBtn.addEventListener("click", e => {
         return;
     }
 
-    fetch("http://localhost:8000/test2", {
+    fetch("http://localhost:8000/api/police", {
         method: "GET",
         headers: {
             "Accept": "application/json",
@@ -67,11 +67,12 @@ searchBtn.addEventListener("click", e => {
         .then(res => res.json())
         .then(data => {
             policeData = data;
+            console.log(policeData);
             const normalizedInput = normalizeRegion(input);   
             
             filterdData = policeData.filter(police => {
-                if (!police.address) return false;
-                const normalizedAddress = normalizeRegion(police.address);
+                if (!police.location) return false;
+                const normalizedAddress = normalizeRegion(police.location);
                 return normalizedAddress.includes(normalizedInput);
             });
 
@@ -82,7 +83,7 @@ searchBtn.addEventListener("click", e => {
             
                 // 각 파출소와의 거리 계산
                 filterdData.forEach(police => {
-                    police.distance = getDistance(userLat, userLng, police.lat, police.lng);
+                    police.distance = getDistance(userLat, userLng, police.lat, police.log);
                 });
             
                 // 거리에 따른 오름차순 정렬
@@ -150,7 +151,7 @@ function renderNextLi(ul) {
             <div class="police-div">
               <p class="police-name">${police.name}</p>
               <span>${Math.round(police.distance)}m</span>
-              <p class="police-address">${police.address}</p>
+              <p class="police-address">${police.location}</p>
             </div>
           `;
           ul.appendChild(li);
@@ -159,7 +160,7 @@ function renderNextLi(ul) {
 
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = { 
-                center: new kakao.maps.LatLng(police.lat, police.lng), // 지도의 중심좌표
+                center: new kakao.maps.LatLng(police.lat, police.log), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
@@ -168,7 +169,7 @@ function renderNextLi(ul) {
             // 선택한 경찰의 위도, 경도를 지도에 마커로 표시
             new kakao.maps.Marker({
                 map: map,
-                position: new kakao.maps.LatLng(police.lat, police.lng)
+                position: new kakao.maps.LatLng(police.lat, police.log)
             });
 
             navigator.geolocation.getCurrentPosition(function(pos){
@@ -178,7 +179,7 @@ function renderNextLi(ul) {
                 const fromName = encodeURIComponent("현재 내 위치");
                 const toName = encodeURIComponent(police.name);
               
-                const url = `https://map.kakao.com/link/from/${fromName},${userLat},${userLng}/to/${toName},${police.lat},${police.lng}`;
+                const url = `https://map.kakao.com/link/from/${fromName},${userLat},${userLng}/to/${toName},${police.lat},${police.log}`;
                 window.open(url);                
             });
 
