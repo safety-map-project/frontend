@@ -154,6 +154,24 @@ function renderNextLi(ul) {
             </div>
           `;
           ul.appendChild(li);
+          
+          li.addEventListener('click', e => {
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(police.lat, police.lng), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+            new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(police.lat, police.lng)
+            });
+            console.log(police);
+          });
+
       });
   
       renderIndex += initIndex;
