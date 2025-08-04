@@ -149,7 +149,7 @@ function renderNextLi(ul) {
             <img src="/css/assets/before_list_police_icon.png" alt="파출소 아이콘">
             <div class="police-div">
               <p class="police-name">${police.name}</p>
-              <span>${police.distance}</span>
+              <span>${Math.round(police.distance)}m</span>
               <p class="police-address">${police.address}</p>
             </div>
           `;
