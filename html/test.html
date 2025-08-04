@@ -22,7 +22,7 @@
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        fetch("http://localhost:8000/test2", {
+        fetch("http://localhost:8000/api/police", {
         method: "GET",
         headers: {
             "Accept": "application/json",
@@ -32,12 +32,12 @@
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            data.forEach(cctv => new kakao.maps.Marker({
-                map:map,
-                position: new kakao.maps.LatLng(cctv.lat, cctv.lng)
-            }));
+            // data.forEach(cctv => new kakao.maps.Marker({
+            //     map:map,
+            //     position: new kakao.maps.LatLng(cctv.lat, cctv.lng)
+            // }));
         })
-        .catch(error => console.error("CCTV test 데이터 로드 실패:", error))
+        .catch(error => console.error("test 데이터 로드 실패:", error))
     </SCript>
 </body>
 </html>

@@ -154,6 +154,36 @@ function renderNextLi(ul) {
             </div>
           `;
           ul.appendChild(li);
+          
+          li.addEventListener('click', e => {
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(police.lat, police.lng), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+
+            // 선택한 경찰의 위도, 경도를 지도에 마커로 표시
+            new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(police.lat, police.lng)
+            });
+
+            navigator.geolocation.getCurrentPosition(function(pos){
+                const userLat = pos.coords.latitude; // user 현재 경도
+                const userLng = pos.coords.longitude; // user 현재 위도
+
+                const fromName = encodeURIComponent("현재 내 위치");
+                const toName = encodeURIComponent(police.name);
+              
+                const url = `https://map.kakao.com/link/from/${fromName},${userLat},${userLng}/to/${toName},${police.lat},${police.lng}`;
+                window.open(url);                
+            });
+
+          });
+
       });
   
       renderIndex += initIndex;
