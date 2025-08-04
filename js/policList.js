@@ -25,15 +25,20 @@ return str
 
 // 거리계산함수(Haversine 공식)
 function getDistance(lat1, lon1, lat2, lon2){
-    const R = 6371e3;
+    lat1 = Number(lat1);
+    lon1 = Number(lon1);
+    lat2 = Number(lat2);
+    lon2 = Number(lon2);
+
+    const R = 6371e3; // 지구 반지름
     const q1 = lat1 * Math.PI / 180;
     const q2 = lat2 * Math.PI / 180;
-    const qq = (lat2 - lat1) * Math.PI / 180;
-    const qw = (lon2 - lon1) * Math.PI / 180;
+    const dlat = (lat2 - lat1) * Math.PI / 180;
+    const dlng = (lon2 - lon1) * Math.PI / 180;
 
-    const a = Math.sin(qq / 2) ** 2 +
+    const a = Math.sin(dlat / 2) ** 2 +
         Math.cos(q1) * Math.cos(q2) *
-        Math.sin(qw / 2);
+        Math.sin(dlng / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
     return R * c;
@@ -45,7 +50,6 @@ searchBtn.addEventListener("click", e => {
 
     // 입력창 값
     input = searchTxt.value.trim();
-    console.log(input);
 
     // 주소 입력하지 않으면 alert창 출력
     if(!input){
@@ -145,6 +149,7 @@ function renderNextLi(ul) {
             <img src="/css/assets/before_list_police_icon.png" alt="파출소 아이콘">
             <div class="police-div">
               <p class="police-name">${police.name}</p>
+              <span>${police.distance}</span>
               <p class="police-address">${police.address}</p>
             </div>
           `;
