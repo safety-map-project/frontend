@@ -104,8 +104,24 @@ searchBtn.addEventListener("click", e => {
                 policeListWrap.innerHTML = '<ul id="policeUl"></ul>';
             
                 const ul = document.querySelector("#policeUl");
-                renderNextLi(ul);
-            
+
+                const duplicateRegions = ['중구', '서구', '동구', '남구', '북구'];
+
+                duplicateRegions.forEach(region => {
+                    if(normalizeRegion(input).includes(region)){
+                        const li = document.createElement("li");
+                      li.className = "police-item";
+                      li.innerHTML = `
+                        <div class="police-div">
+                          <p class="police-name">${region}</p>
+                        </div>
+                      `;
+                      ul.appendChild(li);
+                    } else {
+                        renderNextLi(ul);
+                    }
+                })
+
                 setTimeout(() => {
                     // 컨텐츠 높이보다 실제 보여지는 크기가 똑같거나 크고
                     // 로딩되어야하는 데이터가 있을 경우
@@ -120,6 +136,26 @@ searchBtn.addEventListener("click", e => {
         .catch(error => console.error("police 데이터 로드 실패:", error))
 
 });
+
+function duplicateRegion(input, ul, duplicateRegions){
+
+    
+
+    duplicateRegions.forEach(region => {
+        if(normalizeRegion(input).includes(region)){
+            const li = document.createElement("li");
+          li.className = "police-item";
+          li.innerHTML = `
+            <div class="police-div">
+              <p class="police-name">${region}</p>
+            </div>
+          `;
+          ul.appendChild(li);
+        }
+
+    })
+
+}
 
 policeListWrap.addEventListener("scroll", () => {
     // 현재 스크롤 위치, 컨텐츠 전체 높이, policeListWrap에서 실제 보여지는 크기 구조분해할당
