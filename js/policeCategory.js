@@ -1,7 +1,9 @@
-// 🛡️ 경찰 카테고리 버튼 클릭 시 지도에 표시되는 마커 JS
+// 경찰 카테고리 버튼 클릭 시 지도에 표시되는 마커 JS
+
+// 이미지 주소 
+const markerimageSrc = "../css/assets/policeLogo.png";
 
 // 데이터 저장 배열
-const markerimageSrc = "../css/assets/policeLogo.png";
 let policeList = [];
 let policeLocationsList = []; // 주소
 let positionList = []; // 위도+경도 
@@ -66,18 +68,19 @@ function createMarker(position, image, title) {
 
 // 경찰 마커 생성 함수
 function createPoliceMarkers() {
-
     policeMarkers = []; // 초기화
 
     for (var i = 0; i < positionList.length; i++) {
+        var imageSize = new kakao.maps.Size(64, 64);
+        var imageOptions = {
+            offset: new kakao.maps.Point(32, 64)
+        };
 
-        var imageSize = new kakao.maps.Size(22, 26),
-            imageOptions = {
-                spriteOrigin: new kakao.maps.Point(10, 0),
-                spriteSize: new kakao.maps.Size(36, 98)
-            };
-        var markerImage = createMarkerImage(markerimageSrc, imageSize, imageOptions),
-            marker = createMarker(positionList[i], markerImage, nameList[i]);
+        // 마커 이미지 생성
+        var markerImage = new kakao.maps.MarkerImage(markerimageSrc, imageSize, imageOptions);
+
+        // 마커 생성
+        var marker = createMarker(positionList[i], markerImage, nameList[i]);
 
         policeMarkers.push(marker);
     }
@@ -105,7 +108,7 @@ function changeMarker(type) {
     }
 }
 
-// 🚨 버튼 클릭 시 실행
+// 버튼 클릭 시 실행
 document.getElementById("police").addEventListener("click", async () => {
     await getPoliceApi();         // 데이터 받아오기
     createPoliceMarkers();        // 마커 생성
