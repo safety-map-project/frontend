@@ -1,7 +1,9 @@
-// 🛡️ 경찰 카테고리 버튼 클릭 시 지도에 표시되는 마커 JS
+// 경찰 카테고리 버튼 클릭 시 지도에 표시되는 마커 JS
+
+// 이미지 주소 
+const markerimageSrc = "../css/assets/policeLogo.png";
 
 // 데이터 저장 배열
-const markerimageSrc = "../css/assets/policeLogo.png";
 let policeList = [];
 let policeLocationsList = []; // 주소
 let positionList = []; // 위도+경도 
