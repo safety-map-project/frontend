@@ -99,8 +99,8 @@ function changeMarker(type) {
         cctv.className = '';
         police.className = 'menu_selected';
 
-        setCoffeeMarkers(null);
-        setStoreMarkers(null);
+        // setCoffeeMarkers(null);
+        // setStoreMarkers(null);
         setPoliceMarkers(map); // 경찰 마커 표시
     }
 }
