@@ -133,7 +133,7 @@
             height: 26px;
         }
 
-        .category .ico_coffee {
+        .category .ico_cctv {
             width: 50px;
             background-position: -10px 0;
             background-image: url('../css/assets/CCTV.png');
@@ -142,7 +142,7 @@
             background-repeat: no-repeat;
         }
 
-        .category .ico_store {
+        .category .ico_police {
             width: 50px;
             background-position: -10px 0;
             background-image: url('../css/assets/Police.png');
