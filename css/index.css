@@ -55,7 +55,7 @@
         #searchWrap {
             position: absolute;
             left: 11%;
-            top: 8%;
+            top: 19%;
             width: 680px;
             min-height: 30px;
             background-color: #fff;
@@ -73,6 +73,7 @@
         .search-li {
             list-style: none;
             margin: 5px 0 5px 0;
+            cursor: pointer;
         }
 
         .search-li span {

@@ -1,6 +1,6 @@
 // 중구, 서구, 동구, 남구, 북구 겹치는 지역 검색창 아래 시, 구 출력
 
-import { searchBtn, searchTxt } from "./policList.js";
+import { searchBtn, searchTxt, renderNextLi } from "./policList.js";
 let value = null;
 
 // 주소 비교하기 위해 표준화함
@@ -50,6 +50,8 @@ searchBtn.addEventListener('click', e => {
                     })
                 })
                 
+            } else if(normalizeRegion(value) == region.si){
+                searchWrap.style.display = "none";
             } 
         });
     })
