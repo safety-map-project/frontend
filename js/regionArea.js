@@ -1,5 +1,6 @@
 $(function() {
-    $('#searchBtn').on('click', async function() {
+    $('#searchBtn').on('click', async function(e) {
+        e.preventDefault();
         try {
             const text = $('#searchTxt').val();
             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
@@ -19,9 +20,9 @@ $(function() {
             }
 
             const data =  await res.json();
-            // console.log("응답 데이터:", data);
-            // panTo(37.496486063, 127.028361548);
-            makePolygon(data);
+            console.log("응답 데이터:", data);
+            panTo(data.centerCoord[0], data.centerCoord[1]);
+            makePolygon(data.coors);
 
         } catch (err) {
             console.error("요청 실패:", err);
@@ -34,7 +35,7 @@ $(function() {
     });
 
         // 지도에 폴리곤 표시하는 함수
-        function makePolygon(responseJsonArr) {
+        function makePolygon(polygonArr) {
 
             var container = $('#map')[0];
             var options = {
@@ -44,7 +45,7 @@ $(function() {
 
             var map = new kakao.maps.Map(container, options);
 
-            const polygonPath = responseJsonArr
+            const polygonPath = polygonArr
                 .map(coordPair => 
                     new kakao.maps.LatLng(coordPair[0], coordPair[1])
             );
