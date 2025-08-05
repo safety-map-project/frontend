@@ -1,14 +1,15 @@
 // 파출소 목록 가져오는 js
 
 // 검색창 input
-const searchTxt = document.querySelector("#searchTxt");
+export const searchTxt = document.querySelector("#searchTxt");
 // 검색창 버튼
-const searchBtn = document.querySelector("#searchBtn");
+export const searchBtn = document.querySelector("#searchBtn");
 // 검색창 파출소 div
 const policeListWrap = document.querySelector("#policeListWrap");
-let input = null; // 검새창에서 가져온 값
+export let input = null; // 검새창에서 가져온 값
 let filterdData = []; // 검색한 결과의 police를 담는 배열
 let policeData = []; // fetch로 가져온 police 모든 데이터 담는 배열
+let regionData = []; // fetch로 가져온 region 모든 데이터를 담는 배열
 
 // 주소 비교하기 위해 표준화함
 function normalizeRegion(str) {
@@ -67,12 +68,15 @@ searchBtn.addEventListener("click", e => {
         .then(res => res.json())
         .then(data => {
             policeData = data;
-            console.log(policeData);
+            // 입력한 값 표준화
             const normalizedInput = normalizeRegion(input);   
             
+            // 반환한 데이터들을 filterData 배열에 담음
             filterdData = policeData.filter(police => {
                 if (!police.location) return false;
+                // db에 있는 주소를 표준화함
                 const normalizedAddress = normalizeRegion(police.location);
+                // db의 주소가 입력한 값을 포함하고 있으면 반환
                 return normalizedAddress.includes(normalizedInput);
             });
 
@@ -104,8 +108,9 @@ searchBtn.addEventListener("click", e => {
                 policeListWrap.innerHTML = '<ul id="policeUl"></ul>';
             
                 const ul = document.querySelector("#policeUl");
+
                 renderNextLi(ul);
-            
+
                 setTimeout(() => {
                     // 컨텐츠 높이보다 실제 보여지는 크기가 똑같거나 크고
                     // 로딩되어야하는 데이터가 있을 경우
@@ -126,11 +131,11 @@ policeListWrap.addEventListener("scroll", () => {
     const { scrollTop, scrollHeight, clientHeight } = policeListWrap;
     // 거의 끝까지 스크롤하면
     if (scrollTop + clientHeight >= scrollHeight - 10) {
-      const ul = document.querySelector("#policeUl");
-      // 남은 데이터 추가 랜더링
-      renderNextLi(ul);
+        const ul = document.querySelector("#policeUl");
+        // 남은 데이터 추가 랜더링
+        renderNextLi(ul);
     }
-  });
+});
 
 
 let renderIndex = 0; // 현재 렌더링된 인덱스
