@@ -1,11 +1,12 @@
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-	mapOption = {
-		center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표 
-		level: 3 // 지도의 확대 레벨 
-	};
+            mapOption = {
+            center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표 
+            level: 3 // 지도의 확대 레벨 
+	    };
 
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
 // 커피숍 마커가 표시될 좌표 배열입니다
 var coffeePositions = [
 	new kakao.maps.LatLng(37.499590490909185, 127.0263723554437),
@@ -36,7 +37,7 @@ coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니�
 
 
 	createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
-	createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
+createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
 
 
 changeMarker('coffee'); // 지도에 커피숍 마커가 보이도록 설정합니다    
