@@ -1,43 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="utf-8">
-<title>지도 마커 test</title>
-<link rel="stylesheet" href="/css/index.css">
-
+    <meta charset="UTF-8">
+    <title>경찰서 마커 표시</title>
+    <style>
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        #policeBtn {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <!-- Kakao 지도 API -->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69a0a66e410a9ba5b66da68fba4fa2c4"></script>
 </head>
 <body>
-   <div id="map"></div>
 
-   <script type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69a0a66e410a9ba5b66da68fba4fa2c4">
-    </script>
-    <SCript>
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-      mapOption = {
-         center : new kakao.maps.LatLng(37.5665, 126.9780),
-         level : 5 // 지도의 확대 레벨
-      };
+    <button id="policeBtn">경찰서 보기</button>
+    <div id="map"></div>
 
-        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+    <!-- 외부 JS 파일 연결 -->
+    <script src="../js/cctvCategory.js"></script>
 
-        fetch("http://localhost:8000/api/police", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            // data.forEach(cctv => new kakao.maps.Marker({
-            //     map:map,
-            //     position: new kakao.maps.LatLng(cctv.lat, cctv.lng)
-            // }));
-        })
-        .catch(error => console.error("test 데이터 로드 실패:", error))
-    </SCript>
 </body>
 </html>

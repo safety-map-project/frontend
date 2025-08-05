@@ -36,7 +36,7 @@ coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니�
 
 
 	createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
-	createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
+createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
 
 
 changeMarker('coffee'); // 지도에 커피숍 마커가 보이도록 설정합니다    
