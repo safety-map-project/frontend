@@ -2,8 +2,6 @@
 
 import { searchBtn, searchTxt } from "./policList.js";
 let value = null;
-const duplicationRegion = ['남구', '중구', '서구', '동구', '북구'];
-const search = document.querySelector(".search");
 
 // 주소 비교하기 위해 표준화함
 function normalizeRegion(str) {
