@@ -1,3 +1,15 @@
 /*
 경찰 신고 버튼 css
 */
+
+.reportButton {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    position : absolute;
+    z-index: 10;
+    width: 100px;
+    height: 10px;
+    right: 100px;
+    bottom: 70px;
+}

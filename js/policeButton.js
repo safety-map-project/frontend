@@ -1,1 +1,3 @@
-// 경찰 신고하기 버튼 클릭 시 알림창 js
+document.getElementById("reportBtnAlert").addEventListener('click', () => {
+    alert('경찰이 곧 출동합니다');
+});

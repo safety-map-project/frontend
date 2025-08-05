@@ -8,10 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/index.css">
-<link rel="stylesheet" href="../css/search.css">
-<link rel="stylesheet" href="../css/category.css">
-<link rel="stylesheet" href="../css/policebutton.css">
-<link rel="stylesheet" href="../css/policelist.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <link rel="stylesheet" href="../css/category.css">
+    <link rel="stylesheet" href="../css/policebutton.css">
+    <link rel="stylesheet" href="../css/policelist.css">
 </head>
 
 
@@ -36,18 +36,23 @@
 
             <!-- 검색창, 검색 버튼 div -->
             <div class="search">
-                <input type="text" id="searchTxt" class="btn btn-outline-dark" placeholder="광역시 또는 특별시/구까지 입력(ex. 서울시 강남구)">
+                <input type="text" id="searchTxt" class="btn btn-outline-dark"
+                    placeholder="광역시 또는 특별시/구까지 입력(ex. 서울시 강남구)">
                 <div id="searchWrap">
                     <ul></ul>
                 </div>
                 <button id="searchBtn" class="btn btn-outline-dark">검색</button>
             </div>
 
+            <!-- 신고하기 버튼 div -->
+            <button class="reportButton" id="reportBtnAlert"><img style="width:40px; height:40px"
+                    src="../css/assets/flasher.png"></button>
+
             <!-- 파출소 리스트 div -->
-             <div id="policeListWrap"></div>
+            <div id="policeListWrap"></div>
         </div>
     </main>
-    
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65fbbce8516245d79d959af18a25d24f"></script>
@@ -55,9 +60,9 @@
     <SCript>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = {
-            center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표 
-            level: 3 // 지도의 확대 레벨 
-        };
+                center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표 
+                level: 3 // 지도의 확대 레벨 
+            };
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
     </SCript>
@@ -65,8 +70,8 @@
     <script src="../js/cctvCategory.js"></script>
     <script src="../js/policeCategory.js"></script>
     <script src="../js/policeButton.js"></script>
-     <script type="module" src="../js/findPolice.js"></script>
-     <script type="module" src="../js/policList.js"></script>
+    <script type="module" src="../js/findPolice.js"></script>
+    <script type="module" src="../js/policList.js"></script>
     <script src="../js/regionArea.js"></script>
 
 
