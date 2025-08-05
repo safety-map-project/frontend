@@ -39,30 +39,32 @@ $(function() {
             var container = $('#map')[0];
             var options = {
                 center: new kakao.maps.LatLng(37.496486063, 127.028361548),
-                level: 3
+                level: 7
             };
 
             var map = new kakao.maps.Map(container, options);
 
             const polygonPath = responseJsonArr
-                .map(coordPair => {
-                    new kakao.maps.LatLng(coordPair[0], coordPair[1]);
-            });
+                .map(coordPair => 
+                    new kakao.maps.LatLng(coordPair[0], coordPair[1])
+            );
 
            // 지도에 표시할 다각형을 생성합니다
             var polygon = new kakao.maps.Polygon({
+                    map: map,
                     path:polygonPath, // 그려질 다각형의 좌표 배열입니다
                     strokeWeight: 3, // 선의 두께입니다
-                    strokeColor: '#39DE2A', // 선의 색깔입니다
-                    strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeColor: '#ed2415', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                     strokeStyle: 'solid', // 선의 스타일입니다
-                    fillColor: '#A2FF99', // 채우기 색깔입니다
-                    fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    fillColor: '#ed2415', // 채우기 색깔입니다
+                    fillOpacity: 0.3 // 채우기 불투명도 입니다
             });
 
             // 지도에 다각형을 표시합니다
             polygon.setMap(map);        
-            console.log(polygon.getMap());
+            map.relay;
+            // console.log(polygon.getMap());
 
         }
 
