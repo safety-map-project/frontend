@@ -36,8 +36,8 @@ $(function() {
         }
 
         // 지도에 폴리곤 표시하는 함수
-        function makePolygon(responseJsonArr) {
-            const coordPairs = responseJsonArr; // 좌표 쌍 배열들을 감싸는 outerArray
+        async function makePolygon(responseJsonArr) {
+            const coordPairs = responseJsonArr;
 
             var mapContainer = $('#map')[0],
                 mapOption = {
