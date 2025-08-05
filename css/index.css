@@ -52,9 +52,37 @@
             color: #000;
         }
 
+        #searchWrap {
+            position: absolute;
+            left: 6%;
+            top: 19%;
+            width: 680px;
+            min-height: 30px;
+            background-color: #fff;
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #searchWrap ul {
+            margin: 0;
+            padding: 10px 20px;
+        }
+
+        .search-li {
+            list-style: none;
+            margin: 5px 0 5px 0;
+        }
+
+        .search-li span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+
         #searchBtn {
             position: absolute;
-            /* overflow: hidden;s */
             display: flex;
             top: 100px;
             left: 820px;
