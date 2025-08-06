@@ -116,6 +116,3 @@ document.getElementById("police").addEventListener("click", async () => {
 });
 
 
-// 이미지하고 이미지크기 수정 
-// 카테고리 클릭 안된상태로 시작 
-
