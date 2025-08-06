@@ -8,11 +8,16 @@ $(function() {
 
     var map = new kakao.maps.Map(container, options);
 
-    $('#searchBtn').on('click', async function(e) {
+    $(document).on('click', '.search-li',async function(e) {
         e.preventDefault();
+
+        // 검색창에 입력된 값
+        let searchTxt = $('#searchTxt').val();
+ 
         try {
-            const text = $('#searchTxt').val();
-            const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
+            console.log(searchTxt);
+            // 쿼리에 searchText를 담아서 요청을 보냄
+            const url = `http://localhost:8000/api/region?name=${encodeURIComponent(searchTxt)}`;
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -27,22 +32,36 @@ $(function() {
                 alert(`서버 오류: ${res.status}`);
                 return;
             }
-
             const data =  await res.json();
-            console.log("응답 데이터:", data);
-            console.log(data.centerCoord[0], data.centerCoord[1]);
-            panTo(data.centerCoord[0], data.centerCoord[1]);
             makePolygon(data.coords);
+            panTo(data.centerCoords[0], data.centerCoords[1]);
+            console.log("응답 데이터:", data);
+            // console.log($('.search-li').length);
 
+            
+
+            // if($('search-li').)
+
+            // $('.search-li').each((i,e) => {
+            //     console.log(e.textContent);
+            //     // element.on('click', e => {
+            //     //     searchTxt.val() = lis.text().trim();
+            //     //     console.log(searchTxt.val());
+            //     // })
+            // });
+
+            
+        
         } catch (err) {
             console.error("요청 실패:", err);
             alert("데이터를 불러오는 중 오류가 발생했습니다.");
         } finally {
             $('#searchBtn').prop('disabled', false); // 검색 버튼 비활성화
         }
-
-         
+    
+    
     });
+
 
         // 지도에 폴리곤 표시하는 함수
         function makePolygon(polygonArr) {
@@ -65,8 +84,6 @@ $(function() {
 
             // 지도에 다각형을 표시합니다
             polygon.setMap(map);        
-            // map.relay;
-            // console.log(polygon.getMap());
 
         }
 
@@ -74,12 +91,6 @@ $(function() {
         function panTo(lat, lng) {
             map.panTo(new kakao.maps.LatLng(lat, lng));
 
-            // var markerPosition = new kakao.maps.LatLng(lat, lng);
-            // var marker = new kakao.maps.Marker({
-            //     position: markerPosition
-            // });
-
-            // marker.setMap(map);
-
         }
-});
+})
+        

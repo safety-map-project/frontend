@@ -141,7 +141,7 @@ policeListWrap.addEventListener("scroll", () => {
 let renderIndex = 0; // 현재 렌더링된 인덱스
 const initIndex = 4; // 한 번에 보여줄 데이터 수
   
-export function renderNextLi(ul) {
+function renderNextLi(ul) {
       // 더 이상 렌더링할 데이터가 없으면 종료
       if (renderIndex >= filterdData.length) return;
   
