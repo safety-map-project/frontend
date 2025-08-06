@@ -77,12 +77,5 @@ $(function() {
         function panTo(lat, lng) {
             map.panTo(new kakao.maps.LatLng(lat, lng));
 
-            // var markerPosition = new kakao.maps.LatLng(lat, lng);
-            // var marker = new kakao.maps.Marker({
-            //     position: markerPosition
-            // });
-
-            // marker.setMap(map);
-
         }
 });
