@@ -1,4 +1,13 @@
 $(function() {
+
+    var container = $('#map')[0];
+    var options = {
+        center: new kakao.maps.LatLng(37.50497887258854, 127.06395865447985),
+        level: 7
+    };
+
+    var map = new kakao.maps.Map(container, options);
+
     $('#searchBtn').on('click', async function(e) {
         e.preventDefault();
         try {
@@ -21,8 +30,9 @@ $(function() {
 
             const data =  await res.json();
             console.log("응답 데이터:", data);
+            console.log(data.centerCoord[0], data.centerCoord[1]);
             panTo(data.centerCoord[0], data.centerCoord[1]);
-            makePolygon(data.coors);
+            makePolygon(data.coords);
 
         } catch (err) {
             console.error("요청 실패:", err);
@@ -36,15 +46,6 @@ $(function() {
 
         // 지도에 폴리곤 표시하는 함수
         function makePolygon(polygonArr) {
-
-            var container = $('#map')[0];
-            var options = {
-                center: new kakao.maps.LatLng(37.496486063, 127.028361548),
-                level: 7
-            };
-
-            var map = new kakao.maps.Map(container, options);
-
             const polygonPath = polygonArr
                 .map(coordPair => 
                     new kakao.maps.LatLng(coordPair[0], coordPair[1])
@@ -64,15 +65,21 @@ $(function() {
 
             // 지도에 다각형을 표시합니다
             polygon.setMap(map);        
-            map.relay;
+            // map.relay;
             // console.log(polygon.getMap());
 
         }
 
         // 사용자가 입력한 구의 중심좌표로 이동하는 함수
-        // (나중에 중심좌표 구하는 거 구현해야됨)
         function panTo(lat, lng) {
-            var moveLatLon = new kakao.maps.LatLng(lat, lng);
-            map.panTo(moveLatLon);
+            map.panTo(new kakao.maps.LatLng(lat, lng));
+
+            // var markerPosition = new kakao.maps.LatLng(lat, lng);
+            // var marker = new kakao.maps.Marker({
+            //     position: markerPosition
+            // });
+
+            marker.setMap(map);
+
         }
 });
