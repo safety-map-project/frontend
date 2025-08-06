@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ko">
 
 <head>
@@ -41,12 +41,13 @@
                 <div id="searchWrap">
                     <ul></ul>
                 </div>
-                <button id="searchBtn" type= "button" class="btn btn-outline-dark">검색</button>
+                <button id="searchBtn" type="button" class="btn btn-outline-dark">검색</button>
             </div>
 
             <!-- 신고하기 버튼 div -->
-            <button class="reportButton" id="reportBtnAlert"><img style="width:40px; height:40px"
-                    src="../css/assets/flasher.png"></button>
+            <button id="reportBtnAlert">
+                <img src="../css/assets/flasher2.png" style="width: 100px; height: 100px;">
+            </button>
 
             <!-- 파출소 리스트 div -->
             <div id="policeListWrap"></div>
@@ -58,18 +59,17 @@
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65fbbce8516245d79d959af18a25d24f"></script>
     <!-- <script src="../js/index.js"></script> -->
     <SCript>
-       // 전역 선언
-    let map;
+        // 전역 선언
+        let map;
+        window.onload = function () {
+            const mapContainer = document.getElementById('map'); // 지도를 표시할 div
+            const mapOption = {
+                center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
 
-    window.onload = function () {
-        const mapContainer = document.getElementById('map'); // 지도를 표시할 div
-        const mapOption = {
-            center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
         };
-
-        map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-    };
 
     </SCript>
 
@@ -78,7 +78,7 @@
     <script src="../js/policeButton.js"></script>
     <script type="module" src="../js/findPolice.js"></script>
     <script type="module" src="../js/policList.js"></script>
-    <script  src="../js/regionArea.js"></script>
+    <script src="../js/regionArea.js"></script>
 
 
 </body>
