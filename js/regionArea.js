@@ -30,9 +30,11 @@ $(function() {
 
             const data =  await res.json();
             console.log("응답 데이터:", data);
-            console.log(data.centerCoord[0], data.centerCoord[1]);
-            panTo(data.centerCoord[0], data.centerCoord[1]);
-            makePolygon(data.coords);
+            // console.log(data.centerCoord[0], data.centerCoord[1]);
+
+            // if()
+            // panTo(data.centerCoord[0], data.centerCoord[1]);
+            // makePolygon(data.coords);
 
         } catch (err) {
             console.error("요청 실패:", err);
@@ -43,6 +45,7 @@ $(function() {
 
          
     });
+
 
         // 지도에 폴리곤 표시하는 함수
         function makePolygon(polygonArr) {
@@ -79,7 +82,7 @@ $(function() {
             //     position: markerPosition
             // });
 
-            marker.setMap(map);
+            // marker.setMap(map);
 
         }
 });
