@@ -45,7 +45,7 @@ searchBtn.addEventListener('click', e => {
                 
                 lis.forEach(li => {
                     li.addEventListener('click', e => {
-                        searchTxt.value = li.textContent;
+                        searchTxt.value = li.textContent.trim();
                         searchWrap.style.display = "none";
                     })
                 })
