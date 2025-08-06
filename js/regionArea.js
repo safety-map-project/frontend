@@ -79,7 +79,7 @@ $(function() {
             //     position: markerPosition
             // });
 
-            marker.setMap(map);
+            // marker.setMap(map);
 
         }
 });
