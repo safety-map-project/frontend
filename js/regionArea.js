@@ -7,9 +7,11 @@ $(function() {
     };
 
     var map = new kakao.maps.Map(container, options);
+    let currentPolygon = null;
 
-    $('#searchBtn').on('click', async function(e) {
-        e.preventDefault();
+    // 리스트 요소를 클릭 했을 경우
+    $(document).on('click', '.search-li', async function(e) {
+
         try {
             const text = $('#searchTxt').val();
             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
@@ -24,65 +26,90 @@ $(function() {
             if (!res.ok) {
                 const errorText = await res.text();
                 console.error('서버 오류:', res.status, errorText);
-                alert(`서버 오류: ${res.status}`);
                 return;
             }
 
-            const data =  await res.json();
+            let data =  await res.json();
             console.log("응답 데이터:", data);
-            // console.log(data.centerCoord[0], data.centerCoord[1]);
-
-            // if()
-            panTo(data.centerCoord[0], data.centerCoord[1]);
-            makePolygon(data.coords);
+            panTo(data.centerCoords[0], data.centerCoords[1]);
+            makePolygon(data.coords, data.zone);
 
         } catch (err) {
             console.error("요청 실패:", err);
             alert("데이터를 불러오는 중 오류가 발생했습니다.");
         } finally {
-            $('#searchBtn').prop('disabled', false); // 검색 버튼 비활성화
+            $('#searchBtn').prop('disabled', true);
         }
 
          
     });
 
+    // 검색 버튼 클릭 시
+    $(document).on('click', '#searchBtn', async function(e) {
 
-        // 지도에 폴리곤 표시하는 함수
-        function makePolygon(polygonArr) {
-            const polygonPath = polygonArr
-                .map(coordPair => 
-                    new kakao.maps.LatLng(coordPair[0], coordPair[1])
-            );
+        let inputText = $('#searchTxt').val();
+        if(inputText.includes('시')) { 
+            try {
+                const text = $('#searchTxt').val();
+                const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
+                const res = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json"
+                    }
+                });
+                let data = await res.json();
+                console.log("응답 데이터: ", data);
+                panTo(data.centerCoords[0], data.centerCoords[1]);
+                makePolygon(data.coords, data.zone);
 
-           // 지도에 표시할 다각형을 생성합니다
-            var polygon = new kakao.maps.Polygon({
-                    map: map,
-                    path:polygonPath, // 그려질 다각형의 좌표 배열입니다
-                    strokeWeight: 3, // 선의 두께입니다
-                    strokeColor: '#ed2415', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle: 'solid', // 선의 스타일입니다
-                    fillColor: '#ed2415', // 채우기 색깔입니다
-                    fillOpacity: 0.3 // 채우기 불투명도 입니다
-            });
-
-            // 지도에 다각형을 표시합니다
-            polygon.setMap(map);        
-            // map.relay;
-            // console.log(polygon.getMap());
-
+            } catch(err) {
+                console.log("요청 실패: ", err);
+                alert("데이터를 불러오는 중 오류가 발생했습니다.");
+            } finally {
+                $('#searchBtn').prop("disabled", true);
+            }
+        } else {
+            return;
         }
 
-        // 사용자가 입력한 구의 중심좌표로 이동하는 함수
-        function panTo(lat, lng) {
-            map.panTo(new kakao.maps.LatLng(lat, lng));
+    });
 
-            // var markerPosition = new kakao.maps.LatLng(lat, lng);
-            // var marker = new kakao.maps.Marker({
-            //     position: markerPosition
-            // });
 
-            // marker.setMap(map);
+    // 지도에 폴리곤 표시하는 함수
+    function makePolygon(polygonArr, zoneStatus) {
 
+        if(currentPolygon) {
+            currentPolygon.setMap(null);
         }
+
+        const polygonPath = polygonArr.map(coordPair =>
+            new kakao.maps.LatLng(coordPair[0], coordPair[1])
+        );
+    
+        const color = zoneStatus === 'danger' ? '#ed2415' : '#48b445'; // 위험지역이면 빨간색으로 표시
+    
+        const polygon = new kakao.maps.Polygon({
+            path: polygonPath,
+            strokeWeight: 3,
+            strokeColor: color,
+            strokeOpacity: 1,
+            strokeStyle: 'solid',
+            fillColor: color,
+            fillOpacity: 0.3
+        });
+    
+        polygon.setMap(map);
+
+        currentPolygon = polygon;
+    }
+        
+
+    // 사용자가 입력한 구의 중심좌표로 이동하는 함수
+    function panTo(lat, lng) {
+        map.panTo(new kakao.maps.LatLng(lat, lng));
+    }
+
+        
 });
