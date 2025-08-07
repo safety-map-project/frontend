@@ -16,17 +16,14 @@ cctvMenu.addEventListener('click', async () => {
     await getRegion();
     await getCCTVS(selectedRegionID);
     createCCTVMarkers();
-    changeMarker('cctv');
+    setCCTVMarkers(map);
+    // changeMarker('cctv');
 });
 
 async function getCCTVS(selectedRegionID) {
     try {
         const response = await fetch("http://localhost:8000/api/cctv", {
-            method : "GET",
-            headers : {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json"
-            }
+            method : "GET"
         });
         
         if (response.ok) {
@@ -38,11 +35,11 @@ async function getCCTVS(selectedRegionID) {
             cctvs.forEach(cctv => {
                 
                 // console.log(selectedRegionID);
-                if (cctv.REGIONID === selectedRegionID) {
+                if (cctv.regionId === selectedRegionID) {
                     // console.log(selectedRegionID);
                     // var latlng = new kakao.maps.LatLng(cctv.LAT, cctv.LOG);
                     
-                    positions.push(new kakao.maps.LatLng(cctv.LAT, cctv.LOG));
+                    positions.push(new kakao.maps.LatLng(cctv.lat, cctv.log));
                 
                 };
                 
@@ -55,7 +52,7 @@ async function getCCTVS(selectedRegionID) {
 };
 // district = "종로구";
 // getRegion().then(() => {
-//     console.log("selectedRegionID => " + selectedRegionID);
+//     // console.log("selectedRegionID => " + selectedRegionID);
 //     getCCTVS(selectedRegionID);
 // });
 
@@ -86,8 +83,8 @@ async function getCCTVS(selectedRegionID) {
 // getMarkerPositions();
 
 
-function createMarkerImage(src, size) {
-    return new kakao.maps.MarkerImage(src, size);
+function createMarkerImage(src, size, options) {
+    return new kakao.maps.MarkerImage(src, size, options);
 };
 
 function createMarker(position, image) {
@@ -102,14 +99,12 @@ function createCCTVMarkers() {
 
     for (let i = 0; i < positions.length; i++) {
         let imageSize = new kakao.maps.Size(16, 16);
-        // let imageOptions = {
-        //     offset: new kakao.maps.Point(32, 64)
-        // };
+        let imageOptions = {
+            offset: new kakao.maps.Point(16, 16)
+        };
 
-        // 마커 이미지 생성
-        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOptions);
 
-        // 마커 생성
         let marker = createMarker(positions[i], markerImage);
 
         cctvMarkers.push(marker);
@@ -122,26 +117,26 @@ function setCCTVMarkers(map) {
     }
 };
 
-function changeMarker(type) {
-    const police = document.getElementById('police');
+// function changeMarker(type) {
+//     const police = document.getElementById('police');
 
-    if (type === 'cctv') {
-        cctvMenu.className = 'menu_selected';
-        police.className = '';
+//     if (type === 'cctv') {
+//         cctvMenu.className = 'menu_selected';
+//         police.className = '';
 
-        setCCTVMarkers(map);
-    }else if (type === 'police') {
-        cctvMenu.className = '';
-        police.className = 'menu_selected';
-    }
-};
+//         setCCTVMarkers(map);
+//     }else if (type === 'police') {
+//         cctvMenu.className = '';
+//         police.className = 'menu_selected';
+//     }
+// };
 
 //function getDistrictFromUser() {
-// searchBtn.addEventListener('click', () => {
-//     // alert(searchTxt.value);
-//     district = searchTxt.value.trim();  
-//     // alert(district);
-// });
+searchBtn.addEventListener('click', () => {
+    // alert(searchTxt.value);
+    district = searchTxt.value.trim();  
+    // alert(district);
+});
 // alert(searchTxt.value);
 // console.log(district);
 //};
@@ -149,11 +144,7 @@ function changeMarker(type) {
  async function getRegion() {
     try {
         const response = await fetch("http://localhost:8000/api/region/sigu", {
-            method : "GET",
-            headers : {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json"
-            }
+            method : "GET"
         });
         
         if (response.ok) {
