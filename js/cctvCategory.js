@@ -28,37 +28,18 @@ async function getCCTVS(selectedRegionID) {
         
         if (response.ok) {
             const cctvs = await response.json();
-            // var cctv = JSON.parse(cctvs);
-            // cctvs.forEach(cctv => {
-            //     console.log(cctv.CCTVID);
-            // });
+
             cctvs.forEach(cctv => {
-                
-                // console.log(selectedRegionID);
-                if (cctv.regionId === selectedRegionID) {
-                    // console.log(selectedRegionID);
-                    // var latlng = new kakao.maps.LatLng(cctv.LAT, cctv.LOG);
-                    
-                    positions.push(new kakao.maps.LatLng(cctv.lat, cctv.log));
-                
+                if (cctv.regionId === selectedRegionID) {                    
+                    positions.push(new kakao.maps.LatLng(cctv.lat, cctv.log));                
                 };
-                
             });
         };
-        console.log(positions);
     }catch (error){
         console.error("CCTV 데이터 로드 실패", error);
     }
 };
-// district = "종로구";
-// getRegion().then(() => {
-//     // console.log("selectedRegionID => " + selectedRegionID);
-//     getCCTVS(selectedRegionID);
-// });
 
-//console.log("===>" + getRegion());
-//getCCTVS(selectedRegionID);
-// console.log(positions);
 
 // function getMarkerPositions() {
 //     positions = [];
@@ -76,11 +57,6 @@ async function getCCTVS(selectedRegionID) {
 //         positions.push(position);
 //     });
 // };
-// getCCTVS();
-// getRegion();
-// getMarkerPositions();
-// console.log(positions);
-// getMarkerPositions();
 
 
 function createMarkerImage(src, size, options) {
@@ -133,12 +109,8 @@ function setCCTVMarkers(map) {
 
 //function getDistrictFromUser() {
 searchBtn.addEventListener('click', () => {
-    // alert(searchTxt.value);
     district = searchTxt.value.trim();  
-    // alert(district);
 });
-// alert(searchTxt.value);
-// console.log(district);
 //};
 
  async function getRegion() {
@@ -156,20 +128,15 @@ searchBtn.addEventListener('click', () => {
                 // selectedRegionID = region.regionId;
                 // console.log(selectedRegionID);
                 if (region.gu === district) {
-                    // console.log(region.regionId);
                     selectedRegionID = region.regionId;
                 }else if (address.concat(region.gu) === district) {
-                    
                     selectedRegionID = region.regionId;
                 }else if (address.substring(0, 2) + "시 " + region.gu === district) {
-
                     selectedRegionID = region.regionId;
                 }else if (address.substring(0, 2) + " " + region.gu === district) {
-        
                     selectedRegionID = region.regionId;
                 };
             });
-            // console.log(regions);
         };
     } catch(error){
         console.error("CCTV 데이터 로드 실패", error);
