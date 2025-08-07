@@ -22,11 +22,7 @@ cctvMenu.addEventListener('click', async () => {
 async function getCCTVS(selectedRegionID) {
     try {
         const response = await fetch("http://localhost:8000/api/cctv", {
-            method : "GET",
-            headers : {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json"
-            }
+            method : "GET"
         });
         
         if (response.ok) {
@@ -38,11 +34,11 @@ async function getCCTVS(selectedRegionID) {
             cctvs.forEach(cctv => {
                 
                 // console.log(selectedRegionID);
-                if (cctv.REGIONID === selectedRegionID) {
+                if (cctv.regionId === selectedRegionID) {
                     // console.log(selectedRegionID);
                     // var latlng = new kakao.maps.LatLng(cctv.LAT, cctv.LOG);
                     
-                    positions.push(new kakao.maps.LatLng(cctv.LAT, cctv.LOG));
+                    positions.push(new kakao.maps.LatLng(cctv.lat, cctv.log));
                 
                 };
                 
@@ -53,11 +49,11 @@ async function getCCTVS(selectedRegionID) {
         console.error("CCTV 데이터 로드 실패", error);
     }
 };
-// district = "종로구";
-// getRegion().then(() => {
-//     console.log("selectedRegionID => " + selectedRegionID);
-//     getCCTVS(selectedRegionID);
-// });
+district = "종로구";
+getRegion().then(() => {
+    // console.log("selectedRegionID => " + selectedRegionID);
+    getCCTVS(selectedRegionID);
+});
 
 //console.log("===>" + getRegion());
 //getCCTVS(selectedRegionID);
@@ -137,11 +133,11 @@ function changeMarker(type) {
 };
 
 //function getDistrictFromUser() {
-// searchBtn.addEventListener('click', () => {
-//     // alert(searchTxt.value);
-//     district = searchTxt.value.trim();  
-//     // alert(district);
-// });
+searchBtn.addEventListener('click', () => {
+    // alert(searchTxt.value);
+    district = searchTxt.value.trim();  
+    // alert(district);
+});
 // alert(searchTxt.value);
 // console.log(district);
 //};
@@ -149,11 +145,7 @@ function changeMarker(type) {
  async function getRegion() {
     try {
         const response = await fetch("http://localhost:8000/api/region/sigu", {
-            method : "GET",
-            headers : {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json"
-            }
+            method : "GET"
         });
         
         if (response.ok) {
