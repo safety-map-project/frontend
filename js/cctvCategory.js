@@ -48,14 +48,14 @@ async function getCCTVS(selectedRegionID) {
                 
             });
         };
-        // console.log(positions);
+        console.log(positions);
     }catch (error){
         console.error("CCTV 데이터 로드 실패", error);
     }
 };
 // district = "종로구";
 // getRegion().then(() => {
-//     // console.log("selectedRegionID => " + selectedRegionID);
+//     console.log("selectedRegionID => " + selectedRegionID);
 //     getCCTVS(selectedRegionID);
 // });
 
@@ -128,20 +128,20 @@ function changeMarker(type) {
     if (type === 'cctv') {
         cctvMenu.className = 'menu_selected';
         police.className = '';
+
+        setCCTVMarkers(map);
     }else if (type === 'police') {
         cctvMenu.className = '';
         police.className = 'menu_selected';
-
-        setCCTVMarkers(map);
     }
 };
 
 //function getDistrictFromUser() {
-searchBtn.addEventListener('click', () => {
-    // alert(searchTxt.value);
-    district = searchTxt.value.trim();  
-    // alert(district);
-});
+// searchBtn.addEventListener('click', () => {
+//     // alert(searchTxt.value);
+//     district = searchTxt.value.trim();  
+//     // alert(district);
+// });
 // alert(searchTxt.value);
 // console.log(district);
 //};
