@@ -50,39 +50,39 @@ $(function() {
     });
 
     // 검색 버튼 클릭 시
-    // $(document).on('click', '#searchBtn', async function(e) {
+    $(document).on('click', '#searchBtn', async function(e) {
 
-    //     console.log("검색버튼 클릭");
+        console.log("검색버튼 클릭");
 
-    //     let inputText = $('#searchTxt').val();
-    //     if(inputText.includes('시') && inputText.includes('구')) { 
-    //         try {
-    //             const text = $('#searchTxt').val();
-    //             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
-    //             const res = await fetch(url, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Accept': 'application/json',
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             });
-    //             let data = await res.json();
-    //             console.log("응답 데이터: ", data);
-    //             panTo(data.centerCoords[0], data.centerCoords[1]);
-    //             makePolygon(data.coords, data.zone);
-    //             $('#searchBtn').prop("disabled", true);
+        let inputText = $('#searchTxt').val();
+        if(inputText.includes('시') && inputText.includes('구')) { 
+            try {
+                const text = $('#searchTxt').val();
+                const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
+                const res = await fetch(url, {
+                    method: 'GET',
+                    // headers: {
+                    //     'Accept': 'application/json',
+                    //     "Content-Type": "application/json"
+                    // }
+                });
+                let data = await res.json();
+                console.log("응답 데이터: ", data);
+                panTo(data.centerCoords[0], data.centerCoords[1]);
+                makePolygon(data.coords, data.zone);
+                $('#searchBtn').prop("disabled", true);
 
-    //         } catch(err) {
-    //             console.log("요청 실패: ", err);
-    //             alert("데이터를 불러오는 중 오류가 발생했습니다.");
-    //         } finally {
-    //             $('#searchBtn').prop("disabled", false);
-    //         }
-    //     } else {
-    //         return;
-    //     }
+            } catch(err) {
+                console.log("요청 실패: ", err);
+                alert("데이터를 불러오는 중 오류가 발생했습니다.");
+            } finally {
+                $('#searchBtn').prop("disabled", false);
+            }
+        } else {
+            return;
+        }
 
-    // });
+    });
     
     // 지도에 폴리곤 표시하는 함수
     function makePolygon(polygonArr, zoneStatus) {
