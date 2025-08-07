@@ -16,7 +16,8 @@ cctvMenu.addEventListener('click', async () => {
     await getRegion();
     await getCCTVS(selectedRegionID);
     createCCTVMarkers();
-    changeMarker('cctv');
+    setCCTVMarkers(map);
+    // changeMarker('cctv');
 });
 
 async function getCCTVS(selectedRegionID) {
@@ -49,11 +50,11 @@ async function getCCTVS(selectedRegionID) {
         console.error("CCTV 데이터 로드 실패", error);
     }
 };
-district = "종로구";
-getRegion().then(() => {
-    // console.log("selectedRegionID => " + selectedRegionID);
-    getCCTVS(selectedRegionID);
-});
+// district = "종로구";
+// getRegion().then(() => {
+//     // console.log("selectedRegionID => " + selectedRegionID);
+//     getCCTVS(selectedRegionID);
+// });
 
 //console.log("===>" + getRegion());
 //getCCTVS(selectedRegionID);
@@ -82,8 +83,8 @@ getRegion().then(() => {
 // getMarkerPositions();
 
 
-function createMarkerImage(src, size) {
-    return new kakao.maps.MarkerImage(src, size);
+function createMarkerImage(src, size, options) {
+    return new kakao.maps.MarkerImage(src, size, options);
 };
 
 function createMarker(position, image) {
@@ -98,14 +99,12 @@ function createCCTVMarkers() {
 
     for (let i = 0; i < positions.length; i++) {
         let imageSize = new kakao.maps.Size(16, 16);
-        // let imageOptions = {
-        //     offset: new kakao.maps.Point(32, 64)
-        // };
+        let imageOptions = {
+            offset: new kakao.maps.Point(16, 16)
+        };
 
-        // 마커 이미지 생성
-        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOptions);
 
-        // 마커 생성
         let marker = createMarker(positions[i], markerImage);
 
         cctvMarkers.push(marker);
@@ -118,19 +117,19 @@ function setCCTVMarkers(map) {
     }
 };
 
-function changeMarker(type) {
-    const police = document.getElementById('police');
+// function changeMarker(type) {
+//     const police = document.getElementById('police');
 
-    if (type === 'cctv') {
-        cctvMenu.className = 'menu_selected';
-        police.className = '';
+//     if (type === 'cctv') {
+//         cctvMenu.className = 'menu_selected';
+//         police.className = '';
 
-        setCCTVMarkers(map);
-    }else if (type === 'police') {
-        cctvMenu.className = '';
-        police.className = 'menu_selected';
-    }
-};
+//         setCCTVMarkers(map);
+//     }else if (type === 'police') {
+//         cctvMenu.className = '';
+//         police.className = 'menu_selected';
+//     }
+// };
 
 //function getDistrictFromUser() {
 searchBtn.addEventListener('click', () => {
