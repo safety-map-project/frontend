@@ -41,13 +41,12 @@
                 <div id="searchWrap">
                     <ul></ul>
                 </div>
-                <button id="searchBtn" type="button" class="btn btn-outline-dark">검색</button>
+                <button id="searchBtn" type= "button" class="btn btn-outline-dark">검색</button>
             </div>
 
             <!-- 신고하기 버튼 div -->
-            <button id="reportBtnAlert">
-                <img src="../css/assets/flasher2.png" style="width: 100px; height: 100px;">
-            </button>
+            <button class="reportButton" id="reportBtnAlert"><img style="width:40px; height:40px"
+                    src="../css/assets/flasher2.png"></button>
 
             <!-- 파출소 리스트 div -->
             <div id="policeListWrap"></div>
@@ -57,20 +56,14 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65fbbce8516245d79d959af18a25d24f"></script>
-    <!-- <script src="../js/index.js"></script> -->
     <SCript>
-        // 전역 선언
-        let map;
-        window.onload = function () {
-            const mapContainer = document.getElementById('map'); // 지도를 표시할 div
-            const mapOption = {
-                center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표
-                level: 7 // 지도의 확대 레벨
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+            mapOption = {
+                center: new kakao.maps.LatLng(37.500725285, 127.036600396), // 지도의 중심좌표 
+                level: 3 // 지도의 확대 레벨 
             };
 
-            map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
-        };
-
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성
     </SCript>
 
     <script src="../js/cctvCategory.js"></script>
