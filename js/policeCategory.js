@@ -10,6 +10,9 @@ let positionList = []; // 위도+경도
 let nameList = []; // 파출소 이름
 let policeMarkers = []; // 마커 객체 배열
 
+
+const police = document.getElementById('police');
+
 // 데이터 표시 여부 >> 초기값 안보여줌
 let isDataDisplay = false;
 
@@ -98,13 +101,13 @@ function hidePoliceMarkers() {
     for (let i = 0; i < policeMarkers.length; i++) {
         policeMarkers[i].setMap(null);
     }
+    police.className = 'menu_no_selected';
     isDataDisplay = false;
 }
 
 // 카테고리 변경 함수
 function changeMarker(type) {
-    const cctv = document.getElementById('cctv');
-    const police = document.getElementById('police');
+    
 
     if (type === 'police') {
         cctv.className = '';
