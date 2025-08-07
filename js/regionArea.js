@@ -9,21 +9,23 @@ var polygon = null;
 
 $(function() {
 
-    var map = new kakao.maps.Map(container, options);
     let currentPolygon = null;
 
     // 리스트 요소를 클릭 했을 경우
     $(document).on('click', '.search-li', async function(e) {
+
+        // console.log("리스트요소 클릭");
+
         try {
             const text = $('#searchTxt').val();
             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
             $('#searchBtn').prop('disabled', true);
             const res = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    "Content-Type": "application/json"
-                }
+                // headers: {
+                //     'Accept': 'application/json',
+                //     "Content-Type": "application/json"
+                // }
             });
 
             if (!res.ok) {
@@ -48,43 +50,40 @@ $(function() {
     });
 
     // 검색 버튼 클릭 시
-    $(document).on('click', '#searchBtn', async function(e) {
+    // $(document).on('click', '#searchBtn', async function(e) {
 
-        let inputText = $('#searchTxt').val();
-        if(inputText.includes('시')) { 
-            try {
-                const text = $('#searchTxt').val();
-                const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
-                const res = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        "Content-Type": "application/json"
-                    }
-                });
-                let data = await res.json();
-                console.log("응답 데이터: ", data);
-                panTo(data.centerCoords[0], data.centerCoords[1]);
-                makePolygon(data.coords, data.zone);
-                $('#searchBtn').prop("disabled", true);
+    //     console.log("검색버튼 클릭");
 
-            } catch(err) {
-                console.log("요청 실패: ", err);
-                alert("데이터를 불러오는 중 오류가 발생했습니다.");
-            } finally {
-                $('#searchBtn').prop("disabled", false);
-            }
-        } else {
-            return;
-        }
+    //     let inputText = $('#searchTxt').val();
+    //     if(inputText.includes('시') && inputText.includes('구')) { 
+    //         try {
+    //             const text = $('#searchTxt').val();
+    //             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
+    //             const res = await fetch(url, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Accept': 'application/json',
+    //                     "Content-Type": "application/json"
+    //                 }
+    //             });
+    //             let data = await res.json();
+    //             console.log("응답 데이터: ", data);
+    //             panTo(data.centerCoords[0], data.centerCoords[1]);
+    //             makePolygon(data.coords, data.zone);
+    //             $('#searchBtn').prop("disabled", true);
 
-    });
+    //         } catch(err) {
+    //             console.log("요청 실패: ", err);
+    //             alert("데이터를 불러오는 중 오류가 발생했습니다.");
+    //         } finally {
+    //             $('#searchBtn').prop("disabled", false);
+    //         }
+    //     } else {
+    //         return;
+    //     }
+
+    // });
     
-    // 사용자가 다시 검색하기 위해 검색창 클릭 했
-    $(document).on('click', 'searchTxt', e => {
-        $('searchBtn').prop('disabled', false);
-    });
-
     // 지도에 폴리곤 표시하는 함수
     function makePolygon(polygonArr, zoneStatus) {
 
