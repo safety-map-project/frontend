@@ -9,21 +9,15 @@ var polygon = null;
 
 $(function() {
 
-    var container = $('#map')[0];
-    var options = {
-        center: new kakao.maps.LatLng(37.50497887258854, 127.06395865447985),
-        level: 7
-    };
-
     var map = new kakao.maps.Map(container, options);
     let currentPolygon = null;
 
     // 리스트 요소를 클릭 했을 경우
     $(document).on('click', '.search-li', async function(e) {
-
         try {
             const text = $('#searchTxt').val();
             const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
+            $('#searchBtn').prop('disabled', true);
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -47,7 +41,7 @@ $(function() {
             console.error("요청 실패:", err);
             alert("데이터를 불러오는 중 오류가 발생했습니다.");
         } finally {
-            $('#searchBtn').prop('disabled', true);
+            $('#searchBtn').prop('disabled', false);
         }
 
          
@@ -72,19 +66,24 @@ $(function() {
                 console.log("응답 데이터: ", data);
                 panTo(data.centerCoords[0], data.centerCoords[1]);
                 makePolygon(data.coords, data.zone);
+                $('#searchBtn').prop("disabled", true);
 
             } catch(err) {
                 console.log("요청 실패: ", err);
                 alert("데이터를 불러오는 중 오류가 발생했습니다.");
             } finally {
-                $('#searchBtn').prop("disabled", true);
+                $('#searchBtn').prop("disabled", false);
             }
         } else {
             return;
         }
 
     });
-
+    
+    // 사용자가 다시 검색하기 위해 검색창 클릭 했
+    $(document).on('click', 'searchTxt', e => {
+        $('searchBtn').prop('disabled', false);
+    });
 
     // 지도에 폴리곤 표시하는 함수
     function makePolygon(polygonArr, zoneStatus) {
