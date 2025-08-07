@@ -22,10 +22,10 @@ $(function() {
             $('#searchBtn').prop('disabled', true);
             const res = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    "Content-Type": "application/json"
-                }
+                // headers: {
+                //     'Accept': 'application/json',
+                //     "Content-Type": "application/json"
+                // }
             });
 
             if (!res.ok) {
