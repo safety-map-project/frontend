@@ -59,11 +59,7 @@ searchBtn.addEventListener("click", e => {
     }
 
     fetch("http://localhost:8000/api/police", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        method: "GET"
         })
         .then(res => res.json())
         .then(data => {
