@@ -17,12 +17,7 @@ let isDataDisplay = false;
 async function getPoliceApi() {
     try {
         const res = await fetch("http://localhost:8000/api/police", {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-
+            method: "GET"
         });
 
         const data = await res.json();
