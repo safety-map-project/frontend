@@ -5,16 +5,12 @@ var options = {
 };
 var kakaoMap = new kakao.maps.Map(container, options);
 
-var polygon = null;
+let currentPolygon = null;
 
 $(function() {
 
-    let currentPolygon = null;
-
     // 리스트 요소를 클릭 했을 경우
     $(document).on('click', '.search-li', async function(e) {
-
-        // console.log("리스트요소 클릭");
 
         try {
             const text = $('#searchTxt').val();
@@ -22,10 +18,6 @@ $(function() {
             $('#searchBtn').prop('disabled', true);
             const res = await fetch(url, {
                 method: 'GET',
-                // headers: {
-                //     'Accept': 'application/json',
-                //     "Content-Type": "application/json"
-                // }
             });
 
             if (!res.ok) {
@@ -35,9 +27,14 @@ $(function() {
             }
 
             let data =  await res.json();
-            console.log("응답 데이터:", data);
-            panTo(data.centerCoords[0], data.centerCoords[1]);
-            makePolygon(data.coords, data.zone);
+            // console.log("응답 데이터: ", data);
+            
+                // 검색한 지역이 존재할 경우에만(data 값이 true일 경우에만) 폴리곤을 표시
+                // ex. 부산광역시 강남구 같은 걸 입력하면 폴리곤 안 띄워줌
+            if(data.existRegionTF) {
+                makePolygon(data.coords, data.zone);
+                panTo(data.centerCoords[0], data.centerCoords[1]);
+            }
 
         } catch (err) {
             console.error("요청 실패:", err);
@@ -52,24 +49,27 @@ $(function() {
     // 검색 버튼 클릭 시
     $(document).on('click', '#searchBtn', async function(e) {
 
-        console.log("검색버튼 클릭");
+        let inputText = $('#searchTxt').val(); // 사용자가 입력한 값
 
-        let inputText = $('#searchTxt').val();
+        // 시/구까지 입력했을 경우에만 데이터 요청을 보낸다.
         if(inputText.includes('시') && inputText.includes('구')) { 
             try {
                 const text = $('#searchTxt').val();
                 const url = `http://localhost:8000/api/region?name=${encodeURIComponent(text)}`;
+                // 모든 과정을 동기 처리 하기 위해 
+                // 데이터를 요청하는 과정에서 await을 붙였다.
                 const res = await fetch(url, {
                     method: 'GET',
-                    // headers: {
-                    //     'Accept': 'application/json',
-                    //     "Content-Type": "application/json"
-                    // }
                 });
                 let data = await res.json();
-                console.log("응답 데이터: ", data);
-                panTo(data.centerCoords[0], data.centerCoords[1]);
-                makePolygon(data.coords, data.zone);
+                // console.log("응답 데이터: ", data);
+
+                // 검색한 지역이 존재할 경우에만(data 값이 true일 경우에만) 폴리곤을 표시
+                // ex. 부산광역시 강남구 같은 걸 입력하면 폴리곤 안 띄워줌
+                if(data.existRegionTF) {
+                    makePolygon(data.coords, data.zone);
+                    panTo(data.centerCoords[0], data.centerCoords[1]);
+                }
                 $('#searchBtn').prop("disabled", true);
 
             } catch(err) {
@@ -83,33 +83,38 @@ $(function() {
         }
 
     });
-    
+
     // 지도에 폴리곤 표시하는 함수
     function makePolygon(polygonArr, zoneStatus) {
 
+        // 지도에 이전 polygon이 남아있으면 제거한다.
         if(currentPolygon) {
             currentPolygon.setMap(null);
         }
 
+        // 백엔드에서 polygon 좌표들을 담을 배열을 생성한다.
         const polygonPath = polygonArr.map(coordPair =>
             new kakao.maps.LatLng(coordPair[0], coordPair[1])
         );
     
+        // fetch 요청으로 받아온 구역 정보(zoneStatus)에 따라 색상이 바뀐다.
         const color = zoneStatus === 'danger' ? '#ed2415' : '#48b445'; // 위험지역이면 빨간색으로 표시
+                                                                                                        // 안전지역이면 초록색으로 표시
     
+        // 폴리곤 객체를 생성
         const polygon = new kakao.maps.Polygon({
-            path: polygonPath,
-            strokeWeight: 3,
-            strokeColor: color,
-            strokeOpacity: 1,
-            strokeStyle: 'solid',
-            fillColor: color,
-            fillOpacity: 0.3
+            path: polygonPath, // 좌표 배열
+            strokeWeight: 3, // 선 두께
+            strokeColor: color, // 선 색상
+            strokeOpacity: 1, // 선 투명도
+            strokeStyle: 'solid', // 선 종류
+            fillColor: color, // 채우기 색상
+            fillOpacity: 0.3 // 채우기 투명도
         });
     
-        polygon.setMap(map);
+        polygon.setMap(map); // 만들어진 polygon을 map에다가 세팅한다.
 
-        currentPolygon = polygon;
+        currentPolygon = polygon; // currentPolygon에 갱신한다.
     }
         
 
@@ -118,5 +123,4 @@ $(function() {
         map.panTo(new kakao.maps.LatLng(lat, lng));
     }
 
-        
 });
