@@ -3,21 +3,28 @@ const searchTxt = document.getElementById('searchTxt');
 const searchBtn = document.getElementById('searchBtn');
 const imageSrc = "../css/assets/cctv_marker.png";
 let district = "";
+let selectedRegionID = 0;
+let isVisible = false;
 // var cctvs = [];
 let cctvMarkers = [];
 let positions = [];
 let regions = [];
-let selectedRegionID = 0;
 
 cctvMenu.addEventListener('click', async () => {
-    //getDistrictFromUser();
-    // getMarkerPositions();
+    if (isVisible = false) {
+        cctvMenu.className = 'menu_selected';
+        isVisible = true;
 
-    await getRegion();
-    await getCCTVS(selectedRegionID);
-    createCCTVMarkers();
-    setCCTVMarkers(map);
-    // changeMarker('cctv');
+        await getRegion();
+        await getCCTVS(selectedRegionID);
+        createCCTVMarkers();
+        setCCTVMarkers(map);
+        // changeMarker('cctv');
+    } else if (isVisible = true) {
+        cctvMenu.className = '';
+        isVisible = false;
+        setCCTVMarkers(null);
+    };
 });
 
 async function getCCTVS(selectedRegionID) {
@@ -94,11 +101,11 @@ function setCCTVMarkers(map) {
 };
 
 // function changeMarker(type) {
-//     const police = document.getElementById('police');
+//     // const police = document.getElementById('police');
 
 //     if (type === 'cctv') {
 //         cctvMenu.className = 'menu_selected';
-//         police.className = '';
+//         // police.className = '';
 
 //         setCCTVMarkers(map);
 //     }else if (type === 'police') {
