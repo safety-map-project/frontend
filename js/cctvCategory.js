@@ -1,6 +1,6 @@
-// const cctvMenu = document.getElementById('cctv');
-// const searchTxt = document.getElementById('searchTxt');
-// const searchBtn = document.getElementById('searchBtn');
+const cctvMenu = document.getElementById('cctv');
+const searchTxt = document.getElementById('searchTxt');
+const searchBtn = document.getElementById('searchBtn');
 const imageSrc = "../css/assets/cctv_marker.png";
 let district = "";
 // var cctvs = [];
@@ -9,15 +9,15 @@ let positions = [];
 let regions = [];
 let selectedRegionID = 0;
 
-// cctvMenu.addEventListener('click', async () => {
-//     //getDistrictFromUser();
-//     // getMarkerPositions();
+cctvMenu.addEventListener('click', async () => {
+    //getDistrictFromUser();
+    // getMarkerPositions();
 
-//     await getRegion();
-//     await getCCTVS();
-//     createCCTVMarkers();
-//     changeMarker('cctv');
-// });
+    await getRegion();
+    await getCCTVS(selectedRegionID);
+    createCCTVMarkers();
+    changeMarker('cctv');
+});
 
 async function getCCTVS(selectedRegionID) {
     try {
@@ -32,17 +32,18 @@ async function getCCTVS(selectedRegionID) {
         if (response.ok) {
             const cctvs = await response.json();
             // var cctv = JSON.parse(cctvs);
-            // console.log(cctvs[0].key === "CCTVID");
+            // cctvs.forEach(cctv => {
+            //     console.log(cctv.CCTVID);
+            // });
             cctvs.forEach(cctv => {
-                // console.log(cctv.REGIONID);
-                console.log(selectedRegionID);
+                
+                // console.log(selectedRegionID);
                 if (cctv.REGIONID === selectedRegionID) {
-                    // console.log(cctv.REGIONID);
+                    // console.log(selectedRegionID);
                     // var latlng = new kakao.maps.LatLng(cctv.LAT, cctv.LOG);
                     
-                    
                     positions.push(new kakao.maps.LatLng(cctv.LAT, cctv.LOG));
-                    
+                
                 };
                 
             });
@@ -52,9 +53,14 @@ async function getCCTVS(selectedRegionID) {
         console.error("CCTV 데이터 로드 실패", error);
     }
 };
-district = "종로구";
-getRegion();
-getCCTVS();
+// district = "종로구";
+// getRegion().then(() => {
+//     // console.log("selectedRegionID => " + selectedRegionID);
+//     getCCTVS(selectedRegionID);
+// });
+
+//console.log("===>" + getRegion());
+//getCCTVS(selectedRegionID);
 // console.log(positions);
 
 // function getMarkerPositions() {
@@ -78,18 +84,7 @@ getCCTVS();
 // getMarkerPositions();
 // console.log(positions);
 // getMarkerPositions();
-// function createMarkers() {
-//     for (var i = 0; i < positions.length; i++) {
-//         var imageSize = new kakao.maps.Size(24, 35);
-//         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-        
-//         var marker = new kakao.maps.Marker({
-//             map: map,
-//             position: positions[i].latlng,
-//             image : markerImage
-//         });
-//     }
-// };
+
 
 function createMarkerImage(src, size) {
     return new kakao.maps.MarkerImage(src, size);
@@ -142,16 +137,16 @@ function changeMarker(type) {
 };
 
 //function getDistrictFromUser() {
-// searchBtn.addEventListener('click', () => {
-//     // alert(searchTxt.value);
-//     district = searchTxt.value.trim();  
-//     // alert(district);
-// });
+searchBtn.addEventListener('click', () => {
+    // alert(searchTxt.value);
+    district = searchTxt.value.trim();  
+    // alert(district);
+});
 // alert(searchTxt.value);
 // console.log(district);
 //};
 
-async function getRegion() {
+ async function getRegion() {
     try {
         const response = await fetch("http://localhost:8000/api/region/sigu", {
             method : "GET",
@@ -167,20 +162,20 @@ async function getRegion() {
             regions.forEach(region => {
                 let address = region.si + " ";
                 // console.log(address);
-                selectedRegionID = region.regionId;
+                // selectedRegionID = region.regionId;
                 // console.log(selectedRegionID);
                 if (region.gu === district) {
-                    // console.log(selectedRegionID);
-                    return selectedRegionID = region.regionId;
+                    // console.log(region.regionId);
+                    selectedRegionID = region.regionId;
                 }else if (address.concat(region.gu) === district) {
                     
-                    return selectedRegionID = region.regionId;
+                    selectedRegionID = region.regionId;
                 }else if (address.substring(0, 2) + "시 " + region.gu === district) {
 
-                    return selectedRegionID;
+                    selectedRegionID = region.regionId;
                 }else if (address.substring(0, 2) + " " + region.gu === district) {
         
-                    return selectedRegionID;
+                    selectedRegionID = region.regionId;
                 };
             });
             // console.log(regions);
