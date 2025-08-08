@@ -37,11 +37,7 @@ searchBtn.addEventListener('click', e => {
     
     // 지역테이블의 시, 구를 json형태로 fetch로 가져옴
     fetch("http://localhost:8000/api/region/sigu", {
-        method: "GET",
-        headers : {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        method: "GET"
     })
     .then(res => res.json())
     .then(data => {

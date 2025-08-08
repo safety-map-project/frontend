@@ -59,11 +59,7 @@ searchBtn.addEventListener("click", e => {
     }
 
     fetch("http://localhost:8000/api/police", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        method: "GET"
         })
         .then(res => res.json())
         .then(data => {
@@ -162,14 +158,6 @@ function renderNextLi(ul) {
           ul.appendChild(li);
           
           li.addEventListener('click', e => {
-
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            mapOption = { 
-                center: new kakao.maps.LatLng(police.lat, police.log), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-
-            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
             // 선택한 경찰의 위도, 경도를 지도에 마커로 표시
             new kakao.maps.Marker({
