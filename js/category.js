@@ -10,19 +10,20 @@ let isCCTVDataDisplay = false;
 let isPoliceDataDisplay = false;
 // var cctvs = [];
 let cctvMarkers = [];
+let policeMarkers = []; // 마커 객체 배열
 let positions = [];
+let positionList = []; // 위도+경도
+let policeLocationsList = []; // 주소
+let nameList = []; // 파출소 이름
 let regions = [];
 let policeList = [];
-let policeLocationsList = []; // 주소
-let positionList = []; // 위도+경도 
-let nameList = []; // 파출소 이름
-let policeMarkers = []; // 마커 객체 배열
 
 searchBtn.addEventListener('click', () => {
     district = searchTxt.value.trim();
 });
 
 cctvMenu.addEventListener('click', async () => {
+    positions = [];
     changeMarker(cctv);
 
     if (!isCCTVDataDisplay) {
@@ -272,10 +273,10 @@ function hidePoliceMarkers() {
 function changeMarker(type) {
     if (type === 'cctv') {
         cctvMenu.className = 'menu_selected';
-        policeMenu.className = '';
+        // policeMenu.className = '';
     }else if (type === 'police') {
         policeMenu.className = 'menu_selected';
-        cctvMenu.className = '';
+        // cctvMenu.className = '';
     };
 };
 
