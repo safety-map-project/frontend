@@ -128,6 +128,7 @@ document.getElementById("police").addEventListener("click", async () => {
 
         showPoliceMarkers(map);           // 마커 표시
     } else {
+        police.className='  ';
         hidePoliceMarkers();              // 마커 숨김
     }
 });
